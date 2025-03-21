@@ -8,7 +8,7 @@ extends CharacterBody2D
 
 var mouse_position
 var arena_size # Size of the game window.
-var damage = 0
+var damage = 1
 @export var health: Health
 
 var player_move_speed
@@ -64,5 +64,5 @@ func process_acceleration(angle):
 		new_acc *= player_acceleration_scalar
 	return new_acc
 	
-func on_bullet_hit(health):
-	hit.emit(health)
+func recieved_damage(damage):
+	hit.emit(health.get_health())

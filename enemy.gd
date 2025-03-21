@@ -10,9 +10,12 @@ extends AnimatedSprite2D
 
 @export var bullet_scene: PackedScene
 var damage
+@export var health: Health
+signal hit
 
 func _ready() -> void:
 	$BulletTimer.start()
+	health.health = 10
 
 func _on_bullet_timer_timeout():
 	var bullet = bullet_scene.instantiate()
@@ -20,5 +23,5 @@ func _on_bullet_timer_timeout():
 	bullet.velocity = Vector2(player.global_position - global_position).normalized() * 300
 	add_child(bullet)
 	
-func hit():
-	damage += 1
+func recieved_damage(damage):
+	hit.emit(health.health)

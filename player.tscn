@@ -38,17 +38,18 @@ radius = 52.0
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("health") groups=["player"]]
 scale = Vector2(0.5, 0.5)
-collision_layer = 15
-collision_mask = 15
+collision_layer = 2
 script = ExtResource("1_wb3ic")
 health = NodePath("Health")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-105, -5.5)
 sprite_frames = SubResource("SpriteFrames_6i7g3")
-animation = &"player_2"
+animation = &"player_1"
 
 [node name="HitBox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("4_2hs0m")
 metadata/_custom_type_script = "uid://cvyfsyyp4pnp6"
 
@@ -58,6 +59,8 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_5vh1k")
 
 [node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+collision_layer = 0
+collision_mask = 4
 script = ExtResource("5_1jxqw")
 health = NodePath("../Health")
 metadata/_custom_type_script = "uid://cpv62s52ejtni"
@@ -72,9 +75,6 @@ shape = SubResource("CircleShape2D_i3pqv")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("6_dw050")
-health = 100
 metadata/_custom_type_script = "uid://ly27nkb710x8"
 
-[connection signal="tree_entered" from="." to="." method="_on_tree_entered"]
-[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
-[connection signal="recieved_damage" from="HurtBox" to="." method="on_bullet_hit"]
+[connection signal="recieved_damage" from="HurtBox" to="." method="recieved_damage"]
