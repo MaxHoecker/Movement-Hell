@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://dyaues4yyy0th"]
+
+[ext_resource type="Script" uid="uid://d0gydc4xnwgk0" path="res://enemy.gd" id="1_7k104"]
+[ext_resource type="PackedScene" uid="uid://ob8varjjvfwe" path="res://bullet.tscn" id="2_4gyqm"]
+[ext_resource type="Script" uid="uid://cpv62s52ejtni" path="res://Common/hurtbox.gd" id="3_iifgy"]
+[ext_resource type="Script" uid="uid://ly27nkb710x8" path="res://Common/health.gd" id="4_epg4t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4gyqm"]
+size = Vector2(51, 49)
+
+[node name="Enemy" type="AnimatedSprite2D"]
+script = ExtResource("1_7k104")
+bullet_scene = ExtResource("2_4gyqm")
+
+[node name="BulletTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 51.0
+offset_bottom = 49.0
+
+[node name="EnemyHurtBox" type="Area2D" parent="."]
+script = ExtResource("3_iifgy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHurtBox"]
+position = Vector2(25.5, 24.5)
+shape = SubResource("RectangleShape2D_4gyqm")
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("4_epg4t")
+health = 10
+
+[connection signal="timeout" from="BulletTimer" to="." method="_on_bullet_timer_timeout"]

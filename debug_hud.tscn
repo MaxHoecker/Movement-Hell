@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://ujudk0bnb7n1"]
+
+[ext_resource type="Script" uid="uid://dhva5fsruclw1" path="res://debug_hud.gd" id="1_jwuoe"]
+
+[node name="Debug Hud" type="CanvasLayer"]
+script = ExtResource("1_jwuoe")
+
+[node name="Player Damage" type="Label" parent="."]
+offset_top = 18.0
+offset_right = 40.0
+offset_bottom = 41.0
+text = "Player: "
+
+[node name="Enemy Damage" type="Label" parent="."]
+offset_left = 154.0
+offset_top = 26.0
+offset_right = 194.0
+offset_bottom = 49.0
+text = "Enemy: "

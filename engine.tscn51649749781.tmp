@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://dja2twbhg7un7"]
+
+[ext_resource type="Texture2D" uid="uid://1a0l8hwvbqic" path="res://Assets/Player1.png" id="1_2mc4n"]
+[ext_resource type="Script" uid="uid://c5qeig4pmsym8" path="res://engine.gd" id="1_wb3ic"]
+[ext_resource type="Texture2D" uid="uid://ip2mpw6kwwyt" path="res://Assets/Player2.png" id="2_wb3ic"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6i7g3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_2mc4n")
+}],
+"loop": true,
+"name": &"player_1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_wb3ic")
+}],
+"loop": true,
+"name": &"player_2",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5vh1k"]
+radius = 45.0
+height = 200.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_do35q"]
+size = Vector2(38.5, 107)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0pvyn"]
+radius = 40.0125
+
+[node name="Engine" type="Area2D"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_wb3ic")
+move_speed = 300
+acceleration_scalar = 1400
+friction = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-105, -5.5)
+sprite_frames = SubResource("SpriteFrames_6i7g3")
+animation = &"player_2"
+
+[node name="HitBoxTail" type="CollisionShape2D" parent="."]
+position = Vector2(-143, -0.5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_5vh1k")
+
+[node name="HitBoxBack" type="CollisionShape2D" parent="."]
+position = Vector2(-63.25, -3)
+shape = SubResource("RectangleShape2D_do35q")
+
+[node name="HurtBox" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 0.5)
+shape = SubResource("CircleShape2D_0pvyn")

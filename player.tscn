@@ -1,0 +1,80 @@
+[gd_scene load_steps=11 format=3 uid="uid://dja2twbhg7un7"]
+
+[ext_resource type="Texture2D" uid="uid://1a0l8hwvbqic" path="res://Assets/Player1.png" id="1_2mc4n"]
+[ext_resource type="Script" uid="uid://c5qeig4pmsym8" path="res://player.gd" id="1_wb3ic"]
+[ext_resource type="Texture2D" uid="uid://ip2mpw6kwwyt" path="res://Assets/Player2.png" id="2_wb3ic"]
+[ext_resource type="Script" uid="uid://cvyfsyyp4pnp6" path="res://Common/hitbox.gd" id="4_2hs0m"]
+[ext_resource type="Script" uid="uid://cpv62s52ejtni" path="res://Common/hurtbox.gd" id="5_1jxqw"]
+[ext_resource type="Script" uid="uid://ly27nkb710x8" path="res://Common/health.gd" id="6_dw050"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6i7g3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_2mc4n")
+}],
+"loop": true,
+"name": &"player_1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_wb3ic")
+}],
+"loop": true,
+"name": &"player_2",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5vh1k"]
+radius = 45.0
+height = 200.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0pvyn"]
+radius = 40.0125
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i3pqv"]
+radius = 52.0
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("health") groups=["player"]]
+scale = Vector2(0.5, 0.5)
+collision_layer = 15
+collision_mask = 15
+script = ExtResource("1_wb3ic")
+health = NodePath("Health")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-105, -5.5)
+sprite_frames = SubResource("SpriteFrames_6i7g3")
+animation = &"player_2"
+
+[node name="HitBox" type="Area2D" parent="."]
+script = ExtResource("4_2hs0m")
+metadata/_custom_type_script = "uid://cvyfsyyp4pnp6"
+
+[node name="HitBoxTail" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(-143, -0.5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_5vh1k")
+
+[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+script = ExtResource("5_1jxqw")
+health = NodePath("../Health")
+metadata/_custom_type_script = "uid://cpv62s52ejtni"
+
+[node name="HurtBox2" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(-1, 0.5)
+shape = SubResource("CircleShape2D_0pvyn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-6, -2)
+shape = SubResource("CircleShape2D_i3pqv")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("6_dw050")
+health = 100
+metadata/_custom_type_script = "uid://ly27nkb710x8"
+
+[connection signal="tree_entered" from="." to="." method="_on_tree_entered"]
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
+[connection signal="recieved_damage" from="HurtBox" to="." method="on_bullet_hit"]

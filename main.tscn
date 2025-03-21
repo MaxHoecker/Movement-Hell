@@ -1,0 +1,82 @@
+[gd_scene load_steps=12 format=3 uid="uid://blicm46pjdy2p"]
+
+[ext_resource type="Texture2D" uid="uid://geb6f3llu7l" path="res://Assets/wrinkledPaperBackgroundBlack.png" id="1_0xm2m"]
+[ext_resource type="Shader" uid="uid://drhpu64br1fsq" path="res://main.gdshader" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://dja2twbhg7un7" path="res://player.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://dyaues4yyy0th" path="res://enemy.tscn" id="4_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://ujudk0bnb7n1" path="res://debug_hud.tscn" id="4_lquwl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1bvp3"]
+shader = ExtResource("1_h2yge")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
+size = Vector2(5993, 121)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwl"]
+size = Vector2(5930, 147)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
+size = Vector2(3481.5, 157)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7mycd"]
+size = Vector2(3474.5, 95.5)
+
+[sub_resource type="GDScript" id="GDScript_0xm2m"]
+script/source = "extends Camera2D
+"
+
+[node name="Main" type="Node"]
+
+[node name="Arena" type="Node2D" parent="."]
+position = Vector2(12, 3)
+
+[node name="ColorRect" type="ColorRect" parent="Arena"]
+offset_left = -5742.0
+offset_top = -3618.0
+offset_right = 5943.0
+offset_bottom = 4287.0
+color = Color(0.0941176, 0.0941176, 0.0941176, 1)
+
+[node name="WrinkledPaperBackgroundBlack" type="Sprite2D" parent="Arena"]
+material = SubResource("ShaderMaterial_1bvp3")
+position = Vector2(0, 541)
+scale = Vector2(3, 3)
+texture = ExtResource("1_0xm2m")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Arena"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/StaticBody2D"]
+position = Vector2(-46, -1142)
+shape = SubResource("RectangleShape2D_1bvp3")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Arena/StaticBody2D"]
+position = Vector2(-84, 2219)
+shape = SubResource("RectangleShape2D_lquwl")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Arena/StaticBody2D"]
+position = Vector2(-2931, 571)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_0xm2m")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Arena/StaticBody2D"]
+position = Vector2(2903, 621)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_7mycd")
+
+[node name="Player" parent="." instance=ExtResource("2_h2yge")]
+position = Vector2(-1682, 319)
+motion_mode = 1
+
+[node name="Debug Hud" parent="Player" instance=ExtResource("4_lquwl")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(2, 6)
+scale = Vector2(2, 2)
+script = SubResource("GDScript_0xm2m")
+
+[node name="Enemy" parent="." instance=ExtResource("4_1bvp3")]
+position = Vector2(-1011, 317)
+collision_layer = 15
+collision_mask = 15
+
+[connection signal="hit" from="Player" to="Player/Debug Hud" method="_on_player_hit"]
