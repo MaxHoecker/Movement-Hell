@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://da30yke3jr3s7"]
+
+[ext_resource type="PackedScene" uid="uid://dyaues4yyy0th" path="res://enemy.tscn" id="1_fir6i"]
+
+[node name="Mob Spawner" type="Node2D"]
+
+[node name="Enemy" parent="." instance=ExtResource("1_fir6i")]
+position = Vector2(-36, 52)
+
+[node name="Enemy2" parent="." instance=ExtResource("1_fir6i")]
+position = Vector2(51, -72)
+
+[node name="Enemy3" parent="." instance=ExtResource("1_fir6i")]
+position = Vector2(-112, -72)

@@ -35,3 +35,4 @@ script = ExtResource("4_epg4t")
 
 [connection signal="timeout" from="BulletTimer" to="." method="_on_bullet_timer_timeout"]
 [connection signal="recieved_damage" from="EnemyHurtBox" to="." method="recieved_damage"]
+[connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]

@@ -3,8 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://geb6f3llu7l" path="res://Assets/wrinkledPaperBackgroundBlack.png" id="1_0xm2m"]
 [ext_resource type="Shader" uid="uid://drhpu64br1fsq" path="res://main.gdshader" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://dja2twbhg7un7" path="res://player.tscn" id="2_h2yge"]
-[ext_resource type="PackedScene" uid="uid://dyaues4yyy0th" path="res://enemy.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://ujudk0bnb7n1" path="res://debug_hud.tscn" id="4_lquwl"]
+[ext_resource type="PackedScene" uid="uid://da30yke3jr3s7" path="res://mob_spawner.tscn" id="5_lquwl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1bvp3"]
 shader = ExtResource("1_h2yge")
@@ -64,7 +64,7 @@ rotation = 1.5708
 shape = SubResource("RectangleShape2D_7mycd")
 
 [node name="Player" parent="." instance=ExtResource("2_h2yge")]
-position = Vector2(-1682, 319)
+position = Vector2(-829, -22)
 motion_mode = 1
 
 [node name="Debug Hud" parent="Player" instance=ExtResource("4_lquwl")]
@@ -74,8 +74,7 @@ position = Vector2(2, 6)
 scale = Vector2(2, 2)
 script = SubResource("GDScript_0xm2m")
 
-[node name="Enemy" parent="." instance=ExtResource("4_1bvp3")]
-position = Vector2(-1011, 317)
+[node name="Mob Spawner" parent="." instance=ExtResource("5_lquwl")]
 
 [connection signal="hit" from="Player" to="Player/Debug Hud" method="_on_player_hit"]
-[connection signal="hit" from="Enemy" to="Player/Debug Hud" method="_on_enemy_hit"]
+[connection signal="child_exiting_tree" from="Mob Spawner" to="Player/Debug Hud" method="_on_enemy_killed" unbinds=1]
